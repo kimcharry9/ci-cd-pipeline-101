@@ -216,12 +216,12 @@ webserver
 database
 
 [webserver]
-web01 ansible_ssh_host=<IP>
-web02 ansible_ssh_host=<IP>
+web01 ansible_ssh_host=<web01-IP>
+web02 ansible_ssh_host=<web02-IP>
 
 [database]
-db01 ansible_ssh_host=<IP>
-db02 ansible_ssh_host=<IP>
+db01 ansible_ssh_host=<db01-IP>
+db02 ansible_ssh_host=<db02-IP>
 ```
 
 ### 4.4) Create playbook for command testing
@@ -405,20 +405,17 @@ vi /etc/ansible/roles/webserver/tasks/01-install-service.yaml
   with_fileglob:
     - "var-www/function/*.php"
 
-- name: 2.10 disable apache2 default sites
-  command: a2dissite 000-default.conf
-
-- name: 2.11 enable dependent apache2 modules
+- name: 2.10 enable dependent apache2 modules
   community.general.apache2_module:
     name: proxy_fcgi
     state: present
 
-- name: 2.12 enable apache2 php-fpm config
+- name: 2.11 enable apache2 php-fpm config
   command: a2enconf php8.3-fpm
   notify:
     - restart php-fpm config
     
-- name: 2.13 enable apache2 sites (my_webserver_config)
+- name: 2.12 enable apache2 sites (my_webserver_config)
   command: a2ensite nine-test.conf
   notify:
     - restart apache2

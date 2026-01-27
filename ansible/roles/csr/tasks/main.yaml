@@ -1,5 +1,0 @@
-- import_tasks: 01-install-service.yaml
-  tags: install
-
-- import_tasks: 02-setup-config.yaml
-  tags: config

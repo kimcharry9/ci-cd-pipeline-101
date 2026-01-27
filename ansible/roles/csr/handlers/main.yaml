@@ -1,8 +1,0 @@
-- name: restart apache2
-  service:
-    name: apache2
-    state: restarted
-- name: restart php-fpm config
-  service:
-    name: php8.3-fpm
-    state: restarted

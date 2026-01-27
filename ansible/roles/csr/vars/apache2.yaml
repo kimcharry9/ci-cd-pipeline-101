@@ -1,4 +1,0 @@
-webserver:
-  nine_test:
-    root_dir: /var/www/nine-test 
-    listen_proc: /run/php/php8.3-fpm-webtest.sock

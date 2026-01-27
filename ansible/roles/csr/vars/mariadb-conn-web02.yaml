@@ -1,6 +1,0 @@
-web_to_db:
-  nine_test:
-    db_host: hwc-nine-db02
-    db_usr: users_table
-    db_passwd: users_table
-    db_name: nine_db
