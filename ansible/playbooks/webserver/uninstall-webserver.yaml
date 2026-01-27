@@ -1,0 +1,48 @@
+- name: Uninstall Apache2 and PHP8.3 stack
+  hosts: webserver
+  become: yes
+
+  tasks:
+    - name: 1. stop and disable services
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: no
+      loop:
+        - apache2
+        - php8.3-fpm
+      ignore_errors: yes
+
+    - name: 2. remove Apache2 and PHP packages
+      apt:
+        name:
+          - apache2
+          - apache2-utils
+          - apache2-bin
+          - php8.3
+          - php8.3-cli
+          - php8.3-bz2
+          - php8.3-curl
+          - php8.3-mbstring
+          - php8.3-intl
+          - php8.3-fpm
+          - php8.3-mysqli
+        state: absent
+
+    - name: Clean unused packages
+      apt:
+        autoremove: yes
+        autoclean: yes
+
+    - name: 3. remove Apache2 config directories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/apache2/sites-available
+        - /etc/php/8.3/fpm/pool.d
+
+    - name: 4. remove web application files
+      file:
+        path: /var/www/nine-test
+        state: absent

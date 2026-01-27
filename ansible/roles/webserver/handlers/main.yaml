@@ -1,0 +1,8 @@
+- name: restart apache2
+  systemd_service:
+    name: apache2
+    state: restarted
+- name: restart php-fpm config
+  systemd_service:
+    name: php8.3-fpm
+    state: restarted

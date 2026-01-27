@@ -1,0 +1,17 @@
+pool:
+  nine_test:
+    user: www-data
+    group: www-data
+    listen_proc: /run/php/php8.3-fpm-webtest.sock
+    listen_owner: www-data
+    listen_group: www-data
+    pm:
+      type: dynamic
+      max_children: 5
+      start_servers: 2
+      min_spare_servers: 1
+      max_spare_servers: 3
+      max_requests: 0
+      status_path: /nine-status
+
+rlimit_files: 1024

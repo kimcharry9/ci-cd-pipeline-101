@@ -1,0 +1,8 @@
+# Setup Webserver Service (Apache2 + PHP-FPM) Automation Script
+# - 01-install-service.yaml
+# - 02-setup-config.yaml
+
+- hosts: webserver
+  become: yes   # Run as sudo
+  roles: 
+    - webserver

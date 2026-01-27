@@ -1,0 +1,11 @@
+[service:children]
+webserver
+database
+
+[webserver]
+web01 ansible_ssh_host=<web01-ip>
+web02 ansible_ssh_host=<web02-ip>
+
+[database]
+db01 ansible_ssh_host=<db01-ip>
+db02 ansible_ssh_host=<db02-ip>

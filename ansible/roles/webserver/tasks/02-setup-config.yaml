@@ -1,0 +1,70 @@
+- name: 2.1 create dependent directories with directory exist checking
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - /var/www/nine-test
+    - /var/www/nine-test/home
+    - /var/www/nine-test/function
+    - /etc/apache2/sites-available
+    - /etc/php/8.3/fpm/pool.d
+
+- name: 2.2 copy index.html to host
+  template:
+    src: var-www/home/index.html.j2
+    dest: /var/www/nine-test/home/index.html
+
+- name: 2.3 load apache2 sites vars
+  include_vars:
+    file: "apache2.yaml"
+
+- name: 2.4 copy apache2 sites config to host
+  template:
+    src: apache2/nine-test.conf.j2
+    dest: /etc/apache2/sites-available/nine-test.conf
+
+- name: 2.5 load php-fpm vars
+  include_vars:
+    file: "php-fpm.yaml"
+
+- name: 2.6 copy php-fpm pool config to host
+  template:
+    src: php-fpm/nine-test.conf.j2
+    dest: /etc/php/8.3/fpm/pool.d/nine-test.conf
+
+- name: 2.7 load mariadb vars per host
+  include_vars:
+    file: "mariadb-conn-{{ inventory_hostname }}.yaml"
+
+- name: 2.8 copy php mariadb connection config to host
+  template:
+    src: var-www/function/mariadb-config.php.j2
+    dest: /var/www/nine-test/function/mariadb-config.php
+
+- name: 2.9 copy php script to host
+  copy:
+    src: "{{ item }}"
+    dest: "/var/www/nine-test/function/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: '0644'
+  with_fileglob:
+    - "var-www/function/*.php"
+
+- name: 2.10 enable dependent apache2 modules
+  community.general.apache2_module:
+    name: proxy_fcgi
+    state: present
+
+- name: 2.11 enable apache2 php-fpm config
+  command: a2enconf php8.3-fpm
+  notify:
+    - restart php-fpm config
+    
+- name: 2.12 enable apache2 sites (my_webserver_config)
+  command: a2ensite nine-test.conf
+  notify:
+    - restart apache2

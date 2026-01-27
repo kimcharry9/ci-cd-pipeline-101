@@ -1,0 +1,7 @@
+- name: Test Command on Managed Nodes
+  hosts: service
+  tasks:
+    - name: list files/folders in /tmp command and capture output to myoutputvar
+      command: "ls -lrt /tmp"
+      register: myoutputvar
+    - debug: var=myoutputvar
