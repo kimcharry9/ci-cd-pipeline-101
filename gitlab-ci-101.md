@@ -3,6 +3,19 @@
 
 ---
 [Table Of Contents] - [Gitlab-CI-101](#gitlab-ci-101)
+- [Gitlab-CI-101](#gitlab-ci-101)
+  - [1. Install gitlab](#1-install-gitlab)
+  - [2. Add public key for git connection via SSH method on gitlab UI](#2-add-public-key-for-git-connection-via-ssh-method-on-gitlab-ui)
+  - [3. Set credential for git local repository usage](#3-set-credential-for-git-local-repository-usage)
+    - [3.1) Create user detail](#31-create-user-detail)
+    - [3.2) Check current user config](#32-check-current-user-config)
+  - [4. \[Optional\] Set credential for git global repository usage (one credential, many connections)](#4-optional-set-credential-for-git-global-repository-usage-one-credential-many-connections)
+    - [4.1) Create global user detail](#41-create-global-user-detail)
+    - [4.2) Check current global user config](#42-check-current-global-user-config)
+  - [5. Create your first project](#5-create-your-first-project)
+    - [5.1) Clone target repository or link your current program to repository](#51-clone-target-repository-or-link-your-current-program-to-repository)
+    - [5.2) Create your first gitlab-ci pipeline via .gitlab-ci.yaml](#52-create-your-first-gitlab-ci-pipeline-via-gitlab-ciyaml)
+
 
 ## 1. Install gitlab
 
