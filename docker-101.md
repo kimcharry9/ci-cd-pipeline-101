@@ -43,7 +43,7 @@ sudo apt update
 ```
 ### 1.2) Install docker package and dependencies
 ```shell
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 ## 2. Install rclone
@@ -342,6 +342,15 @@ docker build \
       -f ${CUSTOM_DOCKERFILE:-Dockerfile} \
       -t "${IMAGE_NAME}:${IMAGE_TAG}" \
       -t "${IMAGE_NAME}:${IMAGE_TAG_LATEST}" \
+      .
+
+# for hardware arch definition, please use command below.
+docker buildx build \
+    --platform linux/amd64,linux/arm64 \
+    -t "${IMAGE_NAME}:${IMAGE_TAG}" \
+    -t "${IMAGE_NAME}:${IMAGE_TAG_LATEST}" \
+    -f ${CUSTOM_DOCKERFILE:-Dockerfile} \
+    .
 
 docker push "${IMAGE_NAME}:${IMAGE_TAG}"
 docker push "${IMAGE_NAME}:${IMAGE_TAG_LATEST}"
